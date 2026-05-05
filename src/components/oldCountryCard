@@ -1,0 +1,114 @@
+import { Pressable, Text, View, Animated } from "react-native";
+import { Image } from "expo-image";
+import { useRef } from "react";
+
+interface CardProps {
+  flag_url?: string;
+  countryName?: string;
+  onPress: () => void;
+}
+
+export default function CountryCard({
+  flag_url,
+  countryName,
+  onPress,
+}: CardProps) {
+  const scale = useRef(new Animated.Value(1)).current;
+  const translateY = useRef(new Animated.Value(0)).current;
+  const shakeX = useRef(new Animated.Value(0)).current;
+
+  const handlePressIn = () => {
+    Animated.parallel([
+      Animated.spring(scale, {
+        toValue: 0.94,
+        useNativeDriver: true,
+        tension: 1200,
+        friction: 20,
+      }),
+      Animated.spring(translateY, {
+        toValue: 5,
+        useNativeDriver: true,
+        tension: 1200,
+        friction: 20,
+      }),
+    ]).start();
+  };
+
+  const handlePressOut = () => {
+    Animated.parallel([
+      Animated.spring(scale, {
+        toValue: 1,
+        useNativeDriver: true,
+        tension: 1200,
+        friction: 20,
+      }),
+      Animated.spring(translateY, {
+        toValue: 0,
+        useNativeDriver: true,
+        tension: 1200,
+        friction: 20,
+      }),
+      Animated.sequence([
+        Animated.timing(shakeX, {
+          toValue: -3,
+          duration: 20,
+          useNativeDriver: true,
+        }),
+        Animated.timing(shakeX, {
+          toValue: 3,
+          duration: 20,
+          useNativeDriver: true,
+        }),
+        Animated.timing(shakeX, {
+          toValue: 0,
+          duration: 15,
+          useNativeDriver: true,
+        }),
+      ]),
+    ]).start(() => {
+      onPress(); // ✅ runs AFTER animation (important fix)
+    });
+  };
+
+  return (
+    <Pressable onPressIn={handlePressIn} onPressOut={handlePressOut}>
+      <Animated.View
+        style={{
+          transform: [
+            { scale },
+            { translateY },
+            { translateX: shakeX },
+          ],
+        }}
+      >
+        {/* shadow layer (depth effect) */}
+        <View className="absolute -bottom-2 -right-2 left-2 top-2 rounded-3xl bg-black" />
+
+        {/* card */}
+        <View className="w-85 h-57 rounded-3xl overflow-hidden border-2 border-black">
+          <Image
+            style={{ width: "100%", height: "100%" }}
+            source={flag_url}
+            contentFit="cover"
+          />
+
+          {/* text overlay */}
+          <View className="absolute bottom-5 left-0 right-0 px-2">
+            <Text
+              numberOfLines={1}
+              ellipsizeMode="tail"
+              className="text-center text-2xl text-white [font-family:Bungee-Regular]"
+              style={{
+                textShadowColor: "black",
+                textShadowOffset: { width: 2, height: 1 },
+                textShadowRadius: 5,
+              }}
+            >
+              {countryName}
+            </Text>
+          </View>
+        </View>
+      </Animated.View>
+    </Pressable>
+  );
+}

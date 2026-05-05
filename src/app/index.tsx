@@ -1,31 +1,61 @@
-import { StatusBar } from "expo-status-bar";
-import { Text, View } from "react-native";
+import { View, Animated } from "react-native";
+import { useEffect, useRef } from "react";
+import Button from "../components/Button";
+import { useRouter } from "expo-router";
+
+const WORD = "Glodle";
+const STAGGER = 200; 
 
 export default function App() {
+  const router = useRouter();
+  const anims = useRef(WORD.split("").map(() => new Animated.Value(0))).current;
+
+  useEffect(() => {
+   const wave = Animated.loop(
+  Animated.stagger(
+    STAGGER,
+    anims.map((anim) =>
+      Animated.sequence([
+        Animated.timing(anim, { toValue: -4, duration: 300, useNativeDriver: true }),
+         Animated.timing(anim, { toValue: -0, duration: 600, useNativeDriver: true }),
+        Animated.timing(anim, { toValue:  2, duration: 300, useNativeDriver: true }),
+      ])
+    )
+  ),
+ 
+);
+    wave.start();
+    return () => wave.stop();
+  }, []);
+
   return (
-    <View className="flex-1 bg-white dark:bg-black items-center justify-center px-8">
-      {/* Heading */}
-      <Text className="text-4xl font-extrabold text-gray-800 dark:text-white mb-3 tracking-tight">
-        🚀 Welcome
-      </Text>
+    <View className="flex-1 items-center justify-between py-20">
 
-      {/* Subheading */}
-      <Text className="text-xl dark:text-white text-gray-700 mb-8 text-center leading-relaxed">
-        Build beautiful apps with{" "}
-        <Text className="text-blue-500 font-semibold">
-          Expo (Router) + Uniwind 🔥
-        </Text>
-      </Text>
+      {/* Title */}
+      <View className="items-center pt-10">
+        <View className="rounded-2xl bg-black pb-1.5 pr-1.5">
+          <View className="h-15 w-50 items-center outline-2 outline-[#02ebf7] justify-center rounded-xl bg-white">
+            <View className="flex-row">
+              {WORD.split("").map((char, i) => (
+                <Animated.Text
+                  key={i}
+                  className="text-3xl [font-family:Bungee-Regular] tracking-wider"
+                  style={{ transform: [{ translateY: anims[i] }] }}
+                >
+                  {char}
+                </Animated.Text>
+              ))}
+            </View>
+          </View>
+        </View>
+      </View>
 
-      {/* Instruction text */}
-      <Text className="text-base text-gray-600 dark:text-white text-center max-w-sm">
-        Start customizing your app by editing{" "}
-        <Text className="font-semibold text-gray-800 dark:text-white">
-          app/index.tsx
-        </Text>
-      </Text>
+      {/* Buttons */}
+      <View className="items-center gap-7 pb-7">
+        <Button label="New Game"    onPress={() => router.push("/new-game")} />
+        <Button label="Leaderboard" onPress={() => router.push("/leaderboard")} />
+      </View>
 
-      <StatusBar style="dark" />
     </View>
   );
 }
