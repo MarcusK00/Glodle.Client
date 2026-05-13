@@ -1,11 +1,3 @@
-export const GET_QUESTION = `
-  query {
-    randomQuestion {
-      label
-    }
-  }
-`;
-
 export const GET_ROUND = `
   query {
     randomRound {
