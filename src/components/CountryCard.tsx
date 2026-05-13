@@ -66,7 +66,7 @@ export default function CountryCard({
         }),
       ]),
     ]).start(() => {
-      onPress(); // ✅ runs AFTER animation (important fix)
+      onPress(); 
     });
   };
 
@@ -85,12 +85,14 @@ export default function CountryCard({
         <View className="absolute -bottom-1 -right-1 left-2 top-2 rounded-3xl bg-black" />
 
         {/* card */}
-        <View className="w-85 h-57 rounded-3xl overflow-hidden border-2 border-black">
-          <Image
-            style={{ width: "100%", height: "100%" }}
-            source={flag_url}
-            contentFit="cover"
-          />
+{/* card */}
+<View className="w-85 h-57 rounded-3xl overflow-hidden border-2 border-black bg-gray-200">
+  <Image
+    style={{ width: "100%", height: "100%", backgroundColor: "transparent" }}
+    source={flag_url}
+    contentFit="cover"
+    transition={200}
+  />
 
           {/* text overlay */}
           <View className="absolute bottom-5 left-0 right-0 px-2">
