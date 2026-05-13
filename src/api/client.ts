@@ -1,4 +1,4 @@
-const API_URL = "http://192.168.32.4:3000/graphql";
+const API_URL = "http://192.168.0.20:3000/graphql";
 
 export async function gqlFetch<T>(query: string, variables?: object): Promise<T> {
   const res = await fetch(API_URL, {
