@@ -1,20 +1,72 @@
-# Expo Router and Uniwind 
+# Glodle.Client
 
-Use [Expo Router](https://docs.expo.dev/router/introduction/) with [Uniwind](https://docs.uniwind.dev/) styling.
+A playful Expo + React Native client for the **Glodle** game. The app delivers swipe-based country comparison rounds powered by a GraphQL API, with animated UI, custom fonts, and a retro arcade-inspired look.
 
-## Launch your own
+## ✨ Features
+- **Swipe-to-answer gameplay** with animated cards
+- **Expo Router** navigation
+- **Tailwind / Uniwind** styling
+- **GraphQL** round fetching
+- Custom typography and animated background effects
 
-[![Launch with Expo](https://github.com/expo/examples/blob/master/.gh-assets/launch.svg?raw=true)](https://launch.expo.dev/?github=https://github.com/expo/examples/tree/master/with-router-uniwind)
+## 🧱 Tech Stack
+- **Expo** + **React Native**
+- **Expo Router**
+- **TypeScript**
+- **Tailwind CSS / Uniwind**
+- **GraphQL API**
 
-## 🚀 How to use
+## 🧭 App Flow
+- **Home**: title screen with “New Game” and “Leaderboard”
+- **New Game**: fetches a round and lets players swipe or tap to answer
+- **Leaderboard**: placeholder screen with back navigation
 
+## 🚀 Getting Started
+
+### 1) Install dependencies
 ```sh
-npx create-expo-app -e with-router-uniwind
+npm install
 ```
 
-## Deploy
+### 2) Configure API endpoint
+The GraphQL endpoint is currently hardcoded in:
+```
+src/api/client.ts
+```
 
-Deploy on all platforms with Expo Application Services (EAS).
+Update:
+```
+const API_URL = "http://192.168.0.20:3000/graphql";
+```
 
-- Deploy the website: `npx eas-cli deploy` — [Learn more](https://docs.expo.dev/eas/hosting/get-started/)
-- Deploy on iOS and Android using: `npx eas-cli build` — [Learn more](https://expo.dev/eas)
+to your local or deployed API address.
+
+### 3) Run the app
+```sh
+npm run start
+```
+
+Then choose a platform:
+```sh
+npm run ios
+npm run android
+npm run web
+```
+
+## 📁 Project Structure
+```
+src/
+  app/           # Expo Router screens
+  api/           # GraphQL client, queries, hooks, types
+  components/    # Reusable UI components
+  services/      # Game service helpers
+  utils/         # Utility functions
+  assets/        # Fonts and images
+```
+
+## 🧪 Notes
+- The leaderboard screen is currently a placeholder.
+- The game relies on a GraphQL backend that serves a random round with country metrics.
+
+## 📄 License
+TBD
