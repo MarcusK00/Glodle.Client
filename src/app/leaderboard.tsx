@@ -1,9 +1,7 @@
 import { Text, View } from "react-native";
 import Button from "../components/Button";
 import { useRouter } from "expo-router";
-import { useRound } from "../api/hooks/getRound";
-import { Round } from "../api/types";
-import CountryCard from "../components/CountryCard";
+
 
 export default function leaderboard() {
   const router = useRouter();
