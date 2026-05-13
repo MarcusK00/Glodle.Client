@@ -5,12 +5,6 @@ export interface Question {
   unit: string;
 }
 
-export interface Country {
-  name: string;
-  population: number;
-
-}
-
 export interface CountryMetric {
   country: string;
   value: number;
