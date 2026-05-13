@@ -1,4 +1,4 @@
-# Glodle.Client
+# Glodle
 
 A playful Expo + React Native client for the **Glodle** game. The app delivers swipe-based country comparison rounds powered by a GraphQL API, with animated UI, custom fonts, and a retro arcade-inspired look.
 
